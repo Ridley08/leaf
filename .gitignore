@@ -1,0 +1,7 @@
+# Claude Code / preview server config (not needed on the web)
+.claude/
+
+# OS files
+Thumbs.db
+.DS_Store
+desktop.ini
