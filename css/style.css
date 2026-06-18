@@ -118,65 +118,26 @@ ul{ list-style:none; }
    HERO
 =========================================================== */
 .hero{
-  position:relative; margin-top:74px; height:560px; overflow:hidden;
-  display:flex; align-items:center;
+  position:relative; margin-top:74px; height:540px; overflow:hidden;
+  background:#eef8e0 url('../images/background00.png') center/cover no-repeat;
 }
-.hero__slider,.hero__slide{ position:absolute; inset:0; }
-.hero__slide{ opacity:0; transition:opacity 1.2s ease; }
+.hero__slider{ position:absolute; inset:0; }
+.hero__slide{ position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; }
 .hero__slide.is-active{ opacity:1; }
+
+/* slide 1 : 完成済みの合成画像を中央配置（アニメーションなし） */
+.hero__slide--main{ display:flex; align-items:center; justify-content:center; }
+.hero__img{
+  width:auto; height:auto; max-width:min(1120px,94%); max-height:92%;
+  object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,.12));
+}
+
+/* slide 2-3 : 写真はゆっくりズーム */
 .hero__bg{
   position:absolute; inset:0; background-size:cover; background-position:center;
   animation:heroZoom 9s ease-in-out infinite alternate;
 }
 @keyframes heroZoom{ from{ transform:scale(1); } to{ transform:scale(1.08); } }
-.hero__overlay{
-  position:absolute; inset:0;
-  background:linear-gradient(100deg, rgba(76,160,30,.78) 0%, rgba(108,191,44,.55) 45%, rgba(255,255,255,.05) 80%);
-}
-
-.hero__content{
-  position:relative; z-index:3; width:90%; max-width:var(--maxw);
-  margin-inline:auto; display:flex; align-items:center; justify-content:space-between;
-}
-.hero__copy{ color:#fff; max-width:560px; }
-.hero__badge{
-  display:inline-block; background:#fff; color:var(--green-dark); font-weight:700;
-  font-size:.82rem; padding:6px 18px; border-radius:999px; margin-bottom:18px;
-  box-shadow:var(--shadow);
-  animation:fadeDown .8s .1s both;
-}
-.hero__title{ font-weight:800; line-height:1.35; margin-bottom:18px; }
-.hero__title-sub{
-  display:inline-block; background:rgba(255,255,255,.95); color:var(--green-deep);
-  font-size:1.35rem; padding:4px 16px; border-radius:8px; margin-bottom:12px;
-  animation:fadeUp .8s .25s both;
-}
-.hero__title-main{
-  display:block; font-size:2.7rem; text-shadow:0 3px 10px rgba(0,0,0,.25);
-  animation:fadeUp .8s .4s both;
-}
-.hero__title-main .excl{ color:#ffe34d; }
-.hero__lead{
-  font-size:1.02rem; text-shadow:0 2px 6px rgba(0,0,0,.25); margin-bottom:26px;
-  animation:fadeUp .8s .55s both;
-}
-.hero__btn{
-  display:inline-block; background:#ffb400; color:#fff; font-weight:800;
-  padding:15px 40px; border-radius:999px; box-shadow:0 5px 0 #d99700;
-  transition:.3s; animation:fadeUp .8s .7s both;
-}
-.hero__btn:hover{ transform:translateY(2px); box-shadow:0 3px 0 #d99700; background:#ffa600; }
-
-.hero__person{ position:relative; align-self:flex-end; animation:fadeUp 1s .5s both; }
-.hero__person img{ height:430px; width:auto; filter:drop-shadow(-6px 6px 12px rgba(0,0,0,.2)); }
-.hero__ribbon{
-  position:absolute; top:10px; left:-26px;
-  width:84px; height:84px; border-radius:50%;
-  background:#ffb400; color:#fff; font-weight:800; font-size:1.05rem;
-  display:flex; align-items:center; justify-content:center; text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,.25); border:3px dashed #fff;
-  animation:spin-in .8s 1s both, floaty 3s 1.8s ease-in-out infinite;
-}
 
 .hero__arrow{
   position:absolute; top:50%; transform:translateY(-50%); z-index:4;
@@ -520,11 +481,8 @@ ul{ list-style:none; }
   .header__cta{ margin-left:0; }
   .header__tel{ display:none; }
 
-  .hero{ height:auto; padding:40px 0; }
-  .hero__content{ flex-direction:column; text-align:center; gap:10px; }
-  .hero__copy{ max-width:100%; }
-  .hero__title-main{ font-size:2rem; }
-  .hero__person img{ height:300px; }
+  .hero{ height:320px; }
+  .hero__img{ max-width:96%; max-height:88%; }
 
   .cards,.content__cards,.navband__grid,.fit__list{ grid-template-columns:1fr 1fr; }
   .features__intro{ flex-direction:column; text-align:center; padding:28px 22px; }
@@ -538,8 +496,7 @@ ul{ list-style:none; }
 }
 @media (max-width:520px){
   .cards,.content__cards,.navband__grid,.fit__list{ grid-template-columns:1fr; }
-  .hero__title-sub{ font-size:1.1rem; }
-  .hero__title-main{ font-size:1.7rem; }
+  .hero{ height:230px; }
   .sec-title{ font-size:1.4rem; }
   .news__inner{ flex-direction:column; align-items:flex-start; }
   .news__heading{ border-right:0; }
