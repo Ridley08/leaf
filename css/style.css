@@ -277,17 +277,21 @@ ul{ list-style:none; }
 .ccard__text{ font-size:.9rem; }
 
 .content__subjects{
-  background:var(--green); border-radius:16px; color:#fff;
-  display:flex; align-items:center; gap:30px; padding:30px 44px; overflow:hidden;
+  position:relative;
+  background:var(--green); border-radius:18px; color:#fff;
+  margin-top:90px;                 /* 女性が上にはみ出す分の余白 */
+  padding:34px 340px 34px 48px;    /* 右側は女性のスペースとして確保 */
+  overflow:visible;
 }
-.content__subjects-text{ flex:1; }
-.content__subjects-title{ font-size:1.3rem; font-weight:800; margin-bottom:14px; }
-.content__subjects-list{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
-.content__subjects-list li{
-  background:#fff; color:var(--green-dark); font-weight:700; padding:6px 20px; border-radius:999px;
+.content__subjects-schools{ font-weight:700; font-size:1.06rem; line-height:1.95; }
+.content__subjects-img{
+  position:absolute; right:26px; bottom:0; width:360px; line-height:0;
+  pointer-events:none;
 }
-.content__subjects-img{ flex:0 0 280px; }
-.content__subjects-img img{ filter:drop-shadow(0 6px 12px rgba(0,0,0,.2)); }
+.content__subjects-img img{
+  width:100%; display:block;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.22));
+}
 
 /* ===========================================================
    VOICE
@@ -483,9 +487,9 @@ ul{ list-style:none; }
   .cards,.content__cards,.navband__grid,.fit__list{ grid-template-columns:1fr 1fr; }
   .features__intro{ flex-direction:column; text-align:center; padding:28px 22px; }
   .features__intro-img{ flex-basis:auto; max-width:220px; }
-  .content__subjects{ flex-direction:column; text-align:center; }
-  .content__subjects-img{ flex-basis:auto; max-width:240px; }
-  .content__subjects-list{ justify-content:center; }
+  .content__subjects{ margin-top:58px; padding:92px 26px 26px; border-radius:14px; }
+  .content__subjects-schools{ font-size:.92rem; line-height:1.9; }
+  .content__subjects-img{ width:150px; right:16px; top:-46px; bottom:auto; }
   .cta__inner{ flex-direction:column; }
   .cta__img img{ width:160px; }
   .voice__bubble{ max-width:100%; }
@@ -497,4 +501,7 @@ ul{ list-style:none; }
   .news__inner{ flex-direction:column; align-items:flex-start; }
   .news__heading{ border-right:0; }
   .footer__nav{ gap:28px; }
+  .content__subjects{ margin-top:50px; padding:84px 20px 22px; }
+  .content__subjects-schools{ font-size:.84rem; }
+  .content__subjects-img{ width:128px; right:12px; top:-40px; }
 }
