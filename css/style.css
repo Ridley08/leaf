@@ -260,7 +260,7 @@ ul{ list-style:none; }
 /* ===========================================================
    CONTENT
 =========================================================== */
-.content{ background:var(--white); background-image:url('../images/backgroundwb.png'); background-size:cover; }
+.content{ background:#fff; background-image:url('../images/backgroundwb.png'); background-size:cover; }
 .content__lead{ text-align:center; margin-bottom:44px; }
 .content__cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-bottom:50px; }
 .ccard{ background:#fff; border-radius:12px; overflow:hidden; box-shadow:var(--shadow); transition:transform .3s; }
