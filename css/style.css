@@ -118,26 +118,22 @@ ul{ list-style:none; }
    HERO
 =========================================================== */
 .hero{
-  position:relative; margin-top:74px; height:540px; overflow:hidden;
-  background:#eef8e0 url('../images/background00.png') center/cover no-repeat;
+  position:relative; margin-top:74px;
+  --hw:min(64vw,1000px);            /* 中央スライド幅（= top01.png 表示幅） */
+  height:calc(var(--hw) / 1.911);   /* top01.png のアスペクト比 1160:607 */
+  background:#fff; overflow:hidden;
 }
-.hero__slider{ position:absolute; inset:0; }
-.hero__slide{ position:absolute; inset:0; opacity:0; transition:opacity 1.2s ease; }
-.hero__slide.is-active{ opacity:1; }
-
-/* slide 1 : 完成済みの合成画像を中央配置（アニメーションなし） */
-.hero__slide--main{ display:flex; align-items:center; justify-content:center; }
-.hero__img{
-  width:auto; height:auto; max-width:min(1120px,94%); max-height:92%;
-  object-fit:contain; filter:drop-shadow(0 6px 16px rgba(0,0,0,.12));
+.hero__viewport{ position:absolute; inset:0; overflow:hidden; }
+.hero__track{
+  display:flex; height:100%; will-change:transform;
+  transition:transform .7s cubic-bezier(.45,0,.25,1);
 }
-
-/* slide 2-3 : 写真はゆっくりズーム */
-.hero__bg{
-  position:absolute; inset:0; background-size:cover; background-position:center;
-  animation:heroZoom 9s ease-in-out infinite alternate;
-}
-@keyframes heroZoom{ from{ transform:scale(1); } to{ transform:scale(1.08); } }
+.hero__slide{ flex:0 0 var(--hw); height:100%; position:relative; overflow:hidden; }
+/* slide 1 : 完成済み合成画像を余白なくフル表示 */
+.hero__slide--main{ background:#fff; }
+.hero__img{ width:100%; height:100%; object-fit:contain; display:block; }
+/* slide 2-3 : 余白を埋める写真（見切れOK） */
+.hero__bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
 
 .hero__arrow{
   position:absolute; top:50%; transform:translateY(-50%); z-index:4;
@@ -481,8 +477,7 @@ ul{ list-style:none; }
   .header__cta{ margin-left:0; }
   .header__tel{ display:none; }
 
-  .hero{ height:320px; }
-  .hero__img{ max-width:96%; max-height:88%; }
+  .hero{ --hw:78vw; }
 
   .cards,.content__cards,.navband__grid,.fit__list{ grid-template-columns:1fr 1fr; }
   .features__intro{ flex-direction:column; text-align:center; padding:28px 22px; }
@@ -496,7 +491,7 @@ ul{ list-style:none; }
 }
 @media (max-width:520px){
   .cards,.content__cards,.navband__grid,.fit__list{ grid-template-columns:1fr; }
-  .hero{ height:230px; }
+  .hero{ --hw:86vw; }
   .sec-title{ font-size:1.4rem; }
   .news__inner{ flex-direction:column; align-items:flex-start; }
   .news__heading{ border-right:0; }

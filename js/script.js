@@ -19,38 +19,65 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- Hero slider ---------- */
-  const slides = document.querySelectorAll('.hero__slide');
+  /* ---------- Hero carousel (center mode, seamless slide) ---------- */
+  const track = document.getElementById('heroTrack');
   const dotsWrap = document.getElementById('heroDots');
   const prevBtn = document.getElementById('heroPrev');
   const nextBtn = document.getElementById('heroNext');
-  let current = 0;
-  let timer = null;
 
-  if (slides.length) {
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      if (i === 0) dot.classList.add('is-active');
-      dot.addEventListener('click', () => goTo(i));
-      dotsWrap.appendChild(dot);
-    });
-    const dots = dotsWrap.querySelectorAll('button');
+  if (track) {
+    const reals = Array.from(track.children);
+    const n = reals.length;
+    const viewport = track.parentElement;
+    let pos = 1;            // track index (1 = first real slide)
+    let timer = null;
 
-    function goTo(i) {
-      slides[current].classList.remove('is-active');
-      dots[current].classList.remove('is-active');
-      current = (i + slides.length) % slides.length;
-      slides[current].classList.add('is-active');
-      dots[current].classList.add('is-active');
-      restart();
+    // clone first & last so the loop wraps without a jump
+    track.appendChild(reals[0].cloneNode(true));
+    track.insertBefore(reals[n - 1].cloneNode(true), reals[0]);
+
+    const slideW = () => reals[0].getBoundingClientRect().width;
+    function place() {
+      const offset = (viewport.clientWidth - slideW()) / 2 - pos * slideW();
+      track.style.transform = 'translateX(' + offset + 'px)';
     }
-    function next() { goTo(current + 1); }
-    function prev() { goTo(current - 1); }
-    function restart() { clearInterval(timer); timer = setInterval(next, 5000); }
+    function move() { track.style.transition = ''; place(); updateDots(); }
+    function jump() {
+      track.style.transition = 'none';
+      place();
+      track.offsetHeight;                 // force reflow
+      track.style.transition = '';
+    }
 
-    if (nextBtn) nextBtn.addEventListener('click', next);
-    if (prevBtn) prevBtn.addEventListener('click', prev);
-    restart();
+    // dots
+    for (let i = 0; i < n; i++) {
+      const b = document.createElement('button');
+      b.addEventListener('click', () => { pos = i + 1; move(); restart(); });
+      dotsWrap.appendChild(b);
+    }
+    const dots = Array.from(dotsWrap.children);
+    function updateDots() {
+      const real = ((pos - 1) % n + n) % n;
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === real));
+    }
+
+    function go(dir) { pos += dir; move(); }
+
+    track.addEventListener('transitionend', () => {
+      if (pos === 0) { pos = n; jump(); updateDots(); }
+      else if (pos === n + 1) { pos = 1; jump(); updateDots(); }
+    });
+
+    function restart() { clearInterval(timer); timer = setInterval(() => go(1), 5000); }
+
+    if (nextBtn) nextBtn.addEventListener('click', () => { go(1); restart(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { go(-1); restart(); });
+    window.addEventListener('resize', jump);
+
+    // center immediately (don't depend on rAF, which can be paused offscreen),
+    // then re-center once images/fonts settle
+    jump(); updateDots(); restart();
+    window.addEventListener('load', jump);
   }
 
   /* ---------- FAQ accordion ---------- */
